@@ -12,6 +12,9 @@ class _NewBookingState extends State<NewBooking> {
   TimeOfDay selectedTime = TimeOfDay.now();
 
   void presentTimePicker() {
+    setState(() {
+      isAvailable = false;
+    });
     showTimePicker(context: context, initialTime: TimeOfDay.now())
         .then((value) {
       if (value == null) return;
@@ -33,7 +36,7 @@ class _NewBookingState extends State<NewBooking> {
     final enteredName = nameCont.text;
     if (enteredName.isEmpty) return;
     Provider.of<Arena>(context, listen: false)
-        .addBooking(selectedTime, enteredName);
+        .addBooking(selectedTime, enteredName, DateTime.now());
     Navigator.of(context).pop();
   }
 
@@ -130,9 +133,13 @@ class _NewBookingState extends State<NewBooking> {
                     fontSize: 17,
                     fontWeight: FontWeight.bold,
                   )),
-              child: const Text('Book Now for 45 min'),
+              child: const Text('Book Now for 30 min'),
             ),
-            if(alert) Text('Choose an available slot on the same day!',style: TextStyle(color: Colors.red),)
+            if (alert)
+              Text(
+                'Choose an available slot on the same day!',
+                style: TextStyle(color: Colors.red),
+              )
           ]),
         ),
       ),

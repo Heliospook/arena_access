@@ -9,7 +9,8 @@ import 'dart:math';
 class Booking {
   final TimeOfDay start;
   final String player;
-  Booking(this.start, this.player);
+  final DateTime day;
+  Booking(this.start, this.player, this.day);
 }
 
 class Arena with ChangeNotifier {
@@ -30,11 +31,13 @@ class Arena with ChangeNotifier {
     if (e == null) return;
     _bookings = e.map((data) {
       TimeOfDay start = TimeOfDay(hour: data['hour'], minute: data['minute']);
-      return Booking(start, data['player']);
+      DateTime day = data['day'] == null ? DateTime.now() : DateTime.parse(data['day']);
+      return Booking(start, data['player'], day);
     }).toList();
 
     double now = toDouble(TimeOfDay.now());
     _bookings.removeWhere((element) {
+      if (element.day.day != DateTime.now().day) return false;
       double thistime = toDouble(element.start);
       if (thistime < now - 0.5) {
         return true;
@@ -130,8 +133,8 @@ class Arena with ChangeNotifier {
     return checkAvail(TimeOfDay.now());
   }
 
-  Future<void> addBooking(TimeOfDay time, String person) async {
-    _bookings.add(Booking(time, person));
+  Future<void> addBooking(TimeOfDay time, String person,DateTime day) async {
+    _bookings.add(Booking(time, person, day));
     final oldFree = free;
     if (oldFree && !checkIsFree()) {
       free = false;
@@ -151,6 +154,7 @@ class Arena with ChangeNotifier {
                       'player': e.player,
                     })
                 .toList(),
+            'day' : day.toIso8601String(),
           }));
     } catch (error) {
       _bookings.removeLast();

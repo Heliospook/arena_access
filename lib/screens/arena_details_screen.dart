@@ -82,9 +82,13 @@ class _ArenaDetailScreenState extends State<ArenaDetailScreen>
                   ),
                 ],
               ),
-              actions: [
-                IconButton(onPressed: () {}, icon: const Icon(Icons.login)),
-              ],
+              // actions: [
+              //   IconButton(
+              //       onPressed: () {
+              //         Navigator.of(context).pushNamed('auth');
+              //       },
+              //       icon: const Icon(Icons.login)),
+              // ],
               bottom: TabBar(
                 controller: _controller,
                 tabs: [

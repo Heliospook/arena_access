@@ -1,3 +1,4 @@
+import 'package:arena_access/screens/news_screen.dart';
 import 'package:arena_access/widgets/app_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -16,7 +17,6 @@ class SportsDisplay extends StatefulWidget {
 }
 
 class _SportsDisplayState extends State<SportsDisplay> {
-  
   @override
   void initState() {
     Provider.of<ArenaCollection>(context, listen: false).fetchAndSetData();
@@ -41,12 +41,22 @@ class _SportsDisplayState extends State<SportsDisplay> {
           ],
         ),
         actions: [
-          IconButton(onPressed: () {}, icon: const Icon(Icons.login)),
+          IconButton(
+            onPressed: () async {
+              await Provider.of<ArenaCollection>(context, listen: false)
+                  .fetchAndSetData();
+            },
+            icon: const Icon(
+              Icons.refresh,
+              semanticLabel: "Refresh",
+            ),
+          )
         ],
       ),
       body: RefreshIndicator(
-        onRefresh: (){
-          return Provider.of<ArenaCollection>(context,listen: false).fetchAndSetData();
+        onRefresh: () {
+          return Provider.of<ArenaCollection>(context, listen: false)
+              .fetchAndSetData();
         },
         child: Container(
           decoration: const BoxDecoration(
@@ -74,7 +84,9 @@ class _SportsDisplayState extends State<SportsDisplay> {
         backgroundColor: Theme.of(context).primaryColor,
         foregroundColor: Colors.black,
         elevation: 20.0,
-        onPressed: () {},
+        onPressed: () {
+          Navigator.of(context).pushReplacementNamed(NewsScreen.routeName);
+        },
         child: const Icon(Icons.newspaper),
       ),
       drawer: AppDrawer(),

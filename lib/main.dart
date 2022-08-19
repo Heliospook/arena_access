@@ -1,13 +1,22 @@
+import 'package:arena_access/providers/news_collection.dart';
 import 'package:arena_access/providers/team_data.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 import 'screens/sports_display_screen.dart';
 import 'screens/arena_details_screen.dart';
+import 'screens/news_screen.dart';
+import 'screens/create_news.dart';
 
 import './providers/arena_collection.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitDown, DeviceOrientation.portraitUp]);
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   @override
@@ -20,7 +29,10 @@ class MyApp extends StatelessWidget {
         }),
         ChangeNotifierProvider(create: (ctx) {
           return TeamData();
-        })
+        }),
+        ChangeNotifierProvider(create: (ctx) {
+          return NewsCollection();
+        }),
       ],
       child: MaterialApp(
         title: 'Arena Access',
@@ -36,6 +48,8 @@ class MyApp extends StatelessWidget {
             ))),
         home: SportsDisplay(),
         routes: {
+          NewsScreen.routeName: (context) => NewsScreen(),
+          CreateNews.routeName: ((context) => CreateNews()),
           SportsDisplay.routeName: (context) => SportsDisplay(),
           'tt1': (context) => ChangeNotifierProvider.value(
                 value: arenaCollection.arenas['tt1'],
