@@ -1,16 +1,17 @@
 # arena_access
 
-A new Flutter project.
+This app 
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+Experience the app on your Android device : 
+https://iiitbac-my.sharepoint.com/:u:/g/personal/subhajeet_lahiri_iiitb_ac_in/EcM7OGtn7sxGmW5Ev3xwINMBSBRffEf6zhsxOnGUdLuuOQ?e=ddCvHt
+##### Download the apk from the above link.
 
-A few resources to get you started if this is your first Flutter project:
+Otherwise : 
+- clone the repo/download the zip file on your system
+- Install flutter with support for android development if not done already
+- Hook your android device to your system/ get an emulator up and running
+- Execute 'flutter run' on the terminal
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
