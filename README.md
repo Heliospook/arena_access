@@ -29,3 +29,4 @@ Emulator : Install android studio and start an emulator.
 5. Execute 'flutter run' on the terminal 
 6. Make sure you are connected to the internet so that the app can fetch booking data/news.
 
+
