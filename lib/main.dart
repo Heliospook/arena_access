@@ -1,3 +1,4 @@
+import 'package:arena_access/providers/auth.dart';
 import 'package:arena_access/providers/news_collection.dart';
 import 'package:arena_access/providers/team_data.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +9,8 @@ import 'screens/sports_display_screen.dart';
 import 'screens/arena_details_screen.dart';
 import 'screens/news_screen.dart';
 import 'screens/create_news.dart';
+import 'screens/login_screen.dart';
+import 'screens/user_screen.dart';
 
 import './providers/arena_collection.dart';
 
@@ -24,6 +27,9 @@ class MyApp extends StatelessWidget {
     final arenaCollection = ArenaCollection();
     return MultiProvider(
       providers: [
+        ChangeNotifierProvider.value(
+          value: Auth(),
+        ),
         ChangeNotifierProvider(create: (ctc) {
           return arenaCollection;
         }),
@@ -51,6 +57,8 @@ class MyApp extends StatelessWidget {
           NewsScreen.routeName: (context) => NewsScreen(),
           CreateNews.routeName: ((context) => CreateNews()),
           SportsDisplay.routeName: (context) => SportsDisplay(),
+          UserScreen.routeName : (context)=> UserScreen(),
+          LoginScreen.routeName: (context) => LoginScreen(),
           'tt1': (context) => ChangeNotifierProvider.value(
                 value: arenaCollection.arenas['tt1'],
                 child: ArenaDetailScreen(),

@@ -1,14 +1,17 @@
 // ignore_for_file: unnecessary_const, prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:arena_access/screens/login_screen.dart';
 import 'package:arena_access/widgets/app_drawer.dart';
 import 'package:arena_access/widgets/arena_status.dart';
 import 'package:arena_access/widgets/make_team.dart';
 import '../widgets/new_booking.dart';
+import '../providers/auth.dart';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/arena.dart';
+import 'user_screen.dart';
 
 class ArenaDetailScreen extends StatefulWidget {
   @override
@@ -38,15 +41,50 @@ class _ArenaDetailScreenState extends State<ArenaDetailScreen>
     super.dispose();
   }
 
+  void handle_logout() {
+    showDialog(
+        context: context,
+        builder: (bctx) {
+          return AlertDialog(
+            title: const Text('Confirm Logout'),
+            content: const Text('Are you sure you wish to logout?'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text('No'),
+              ),
+              TextButton(
+                onPressed: () {
+                  Provider.of<Auth>(context, listen: false).logout();
+                  Navigator.of(context).pop();
+                },
+                child: const Text(
+                  'Logout',
+                  style: TextStyle(color: Colors.red),
+                ),
+              )
+            ],
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     final arena = Provider.of<Arena>(context);
     var dowemaketeams = false;
     if (['foo', 'bas'].contains(arena.id)) dowemaketeams = true;
-
+    bool isAuth = Provider.of<Auth>(context).isAuth;
     final actionButtons = [
       FloatingActionButton(
         onPressed: () {
+          bool auth = Provider.of<Auth>(context, listen: false).isAuth;
+          if (!auth) {
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content: Text('Authentication required to add booking')));
+            return;
+          }
           showModalBottomSheet(
               context: context,
               builder: (bctx) {
@@ -82,13 +120,20 @@ class _ArenaDetailScreenState extends State<ArenaDetailScreen>
                   ),
                 ],
               ),
-              // actions: [
-              //   IconButton(
-              //       onPressed: () {
-              //         Navigator.of(context).pushNamed('auth');
-              //       },
-              //       icon: const Icon(Icons.login)),
-              // ],
+              actions: [
+                IconButton(
+                  onPressed: () {
+                    if (isAuth) {
+                      handle_logout();
+                    } else {
+                      Navigator.of(context).pushNamed(LoginScreen.routeName);
+                    }
+                  },
+                  icon: Icon(
+                    isAuth ? Icons.logout : Icons.login,
+                  ),
+                ),
+              ],
               bottom: TabBar(
                 controller: _controller,
                 tabs: [

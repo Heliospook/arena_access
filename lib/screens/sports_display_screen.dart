@@ -1,4 +1,6 @@
+import 'package:arena_access/screens/login_screen.dart';
 import 'package:arena_access/screens/news_screen.dart';
+import 'package:arena_access/screens/user_screen.dart';
 import 'package:arena_access/widgets/app_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -9,6 +11,7 @@ import '../widgets/third_page.dart';
 import '../widgets/fourth_page.dart';
 
 import '../providers/arena_collection.dart';
+import '../providers/auth.dart';
 
 class SportsDisplay extends StatefulWidget {
   static const routeName = '/sports_display';
@@ -23,8 +26,38 @@ class _SportsDisplayState extends State<SportsDisplay> {
     super.initState();
   }
 
+  void handle_logout() {
+    showDialog(
+        context: context,
+        builder: (bctx) {
+          return AlertDialog(
+            title: const Text('Confirm Logout'),
+            content: const Text('Are you sure you wish to logout?'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text('No'),
+              ),
+              TextButton(
+                onPressed: () {
+                  Provider.of<Auth>(context, listen: false).logout();
+                  Navigator.of(context).pop();
+                },
+                child: const Text(
+                  'Logout',
+                  style: TextStyle(color: Colors.red),
+                ),
+              )
+            ],
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
+    bool isAuth = Provider.of<Auth>(context).isAuth;
     return Scaffold(
       appBar: AppBar(
         title: Row(
@@ -42,13 +75,15 @@ class _SportsDisplayState extends State<SportsDisplay> {
         ),
         actions: [
           IconButton(
-            onPressed: () async {
-              await Provider.of<ArenaCollection>(context, listen: false)
-                  .fetchAndSetData();
+            onPressed: () {
+              if (isAuth) {
+                handle_logout();
+              } else {
+                Navigator.of(context).pushNamed(LoginScreen.routeName);
+              }
             },
-            icon: const Icon(
-              Icons.refresh,
-              semanticLabel: "Refresh",
+            icon: Icon(
+              isAuth ? Icons.logout : Icons.login,
             ),
           )
         ],
@@ -85,7 +120,7 @@ class _SportsDisplayState extends State<SportsDisplay> {
         foregroundColor: Colors.black,
         elevation: 20.0,
         onPressed: () {
-          Navigator.of(context).pushReplacementNamed(NewsScreen.routeName);
+          Navigator.of(context).pushNamed(NewsScreen.routeName);
         },
         child: const Icon(Icons.newspaper),
       ),

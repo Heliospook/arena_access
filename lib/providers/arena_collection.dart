@@ -4,6 +4,9 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class ArenaCollection with ChangeNotifier {
+  // final String authToken;
+  // ArenaCollection(this.authToken);
+
   final Map<String, Arena> _arenas = {
     'tt1': Arena(
       id: 'tt1',

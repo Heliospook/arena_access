@@ -28,7 +28,7 @@ class NewsCollection with ChangeNotifier {
             'timestamp': timestamp.toIso8601String(),
           }));
       final data = json.decode(response.body);
-      _items.add(NewsData(data['name'],author, title, content, timestamp));
+      _items.insert(0,NewsData(data['name'],author, title, content, timestamp));
       notifyListeners();
     } catch (error) {
       throw (error);
@@ -51,7 +51,7 @@ class NewsCollection with ChangeNotifier {
         updatedList.add(NewsData(key,value['author'], value['title'], value['content'],
             DateTime.parse(value['timestamp'])));
       });
-      _items = updatedList;
+      _items = updatedList.reversed.toList();
       // print(_items);
       notifyListeners();
     } catch (error) {
