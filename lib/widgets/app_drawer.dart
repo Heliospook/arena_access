@@ -2,6 +2,8 @@ import 'package:arena_access/screens/news_screen.dart';
 import 'package:arena_access/screens/sports_display_screen.dart';
 import 'package:flutter/material.dart';
 
+import 'package:url_launcher/url_launcher.dart';
+
 class AppDrawer extends StatefulWidget {
   @override
   State<AppDrawer> createState() => _AppDrawerState();
@@ -108,9 +110,22 @@ class _AppDrawerState extends State<AppDrawer> {
             leading: Icon(Icons.newspaper),
             title: Text('News'),
             onTap: () {
-              Navigator.of(context)
-                  .pushReplacementNamed(NewsScreen.routeName);
+              Navigator.of(context).pushReplacementNamed(NewsScreen.routeName);
             }),
+        Divider(),
+        ListTile(
+          tileColor: Theme.of(context).primaryColor,
+          title: Text('Meet the dev'),
+          subtitle: Text('Subhajeet Lahiri'),
+          trailing: Image.asset(
+            'assets/images/gitIcon.png',
+            width: 30,
+          ),
+          onTap: () async{ 
+            final  url = Uri.parse('https://github.com/Heliospook');
+            await launchUrl(url);
+          },
+        )
         // Divider(),
         // ListTile(
         //     leading: Icon(Icons.login), title: Text('Login'), onTap: () {}),
