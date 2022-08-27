@@ -1,6 +1,13 @@
 # arena_access
+##### Download the app now!
+https://iiitbac-my.sharepoint.com/:u:/g/personal/subhajeet_lahiri_iiitb_ac_in/EcM7OGtn7sxGmW5Ev3xwINMBSBRffEf6zhsxOnGUdLuuOQ?e=ddCvHt
 
-This app 
+## About
+Flutter app to track everything related to on-campus sports. You can 
+- Track whether arenas(grounds, courts, tables) are free or occupied
+- Add a booking for 30 min
+- Make Teams / Tournaments on the go
+- Follow news/announcements
 
 ## Getting Started
 
