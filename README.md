@@ -20,9 +20,13 @@ https://iiitbac-my.sharepoint.com/:u:/g/personal/subhajeet_lahiri_iiitb_ac_in/Ec
 ##### Download the apk from the above link.
 
 Otherwise : 
-- clone the repo/download the zip file on your system
-- Install flutter with support for android development if not done already
-- Hook your android device to your system/ get an emulator up and running
-- Execute 'flutter run' on the terminal
+1. Clone the repo/download the zip file and extract the contents on your system 
+2. Install flutter with support for android development if not done already 
+3. Hook your android device to your system/ get an emulator up and running. 
+Your device : Enable USB debugging and plug the device in. 
+Emulator : Install android studio and start an emulator. 
+4. Run ‘flutter pub get’ inside the root arena access directory to install the necessary packages 
+5. Execute 'flutter run' on the terminal 
+6. Make sure you are connected to the internet so that the app can fetch booking data/news.
 
 
